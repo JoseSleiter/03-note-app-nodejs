@@ -9,7 +9,7 @@ export class NoteController implements INoteController {
 
     getAllNotes = async (_req: Request, res: Response): Promise<void> => {
         try {
-            const notes: INote[] = await this.noteService?.getAllNotes();
+            const notes: INote[] = await this.noteService.getAllNotes();
             res.status(200).json(notes);
         } catch (error: any) {
             res.status(500).json({ error: error.message });
@@ -18,9 +18,9 @@ export class NoteController implements INoteController {
 
     getNoteById = async (req: Request, res: Response): Promise<void> => {
         try {
-            const updatedNote: INote | null = await this.noteService.getById(req.params.id);
-            if (updatedNote) {
-                res.status(200).json(updatedNote);
+            const note: INote | null = await this.noteService.getNoteById(req.params.id);
+            if (note) {
+                res.status(200).json(note);
             } else {
                 res.status(404).json({ message: `Note with id ${req.params.id} not found` });
             }
@@ -55,7 +55,7 @@ export class NoteController implements INoteController {
         try {
             const deletedNote: boolean | null = await this.noteService.deleteNoteById(req.params.id);
             if (deletedNote) {
-                res.status(200).json(deletedNote);
+                res.status(201).json(deletedNote);
             } else {
                 res.status(404).json({ message: `Note with id ${req.params.id} not found` });
             }

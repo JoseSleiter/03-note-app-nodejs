@@ -11,7 +11,7 @@ export class NoteService implements INoteService {
         return this.repository.findAll();
     }
 
-    async getById(id: string): Promise<INote | null> {
+    async getNoteById(id: string): Promise<INote | null> {
         return this.repository.findById(id);
     }
 

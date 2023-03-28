@@ -13,6 +13,7 @@ export interface INoteRepository {
     findById(id: string): Promise<INote | null>
     create(note: INote): Promise<INote>
     update(id: string, note: INote): Promise<INote | null>
+    delete(id: string): Promise<boolean>
 }
 
 export type CreateNoteDTO = Omit<INote, 'id' | 'createdAt' | 'updatedAt'>
@@ -23,7 +24,7 @@ export interface UpdateNoteDTO {
 }
 export interface INoteService {
     getAllNotes(): Promise<INote[]>
-    getById(id: string): Promise<INote | null>
+    getNoteById(id: string): Promise<INote | null>
     createNote(data: CreateNoteDTO): Promise<INote>
     updateNoteById(id: string, data: UpdateNoteDTO): Promise<INote | null>
     deleteNoteById(id: string): Promise<boolean>

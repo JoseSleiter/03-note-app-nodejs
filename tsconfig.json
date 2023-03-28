@@ -4,6 +4,7 @@
     "removeComments": true,
     "target": "es2017",
     "outDir": "./dist",
+    "rootDir": "./src",
     "esModuleInterop": true,
     "strict": true,
     "noUnusedLocals": true,
@@ -11,5 +12,9 @@
     "noImplicitReturns": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
-  }
+  },
+  "exclude": [
+    "**/*.spec.ts",
+    "**/*.mock.ts",    
+  ]
 }
