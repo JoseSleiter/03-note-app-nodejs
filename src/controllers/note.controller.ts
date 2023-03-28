@@ -25,7 +25,11 @@ export class NoteController implements INoteController {
                 res.status(404).json({ message: `Note with id ${req.params.id} not found` });
             }
         } catch (error: any) {
-            res.status(500).json({ error: error.message });
+            if (error.name === 'CastError') {
+                res.status(400).json({ message: `Invalid value to param id: ${error.value}` });
+            } else {
+                res.status(500).json({ error: error.message });
+            }
         }
     }
 
@@ -34,7 +38,11 @@ export class NoteController implements INoteController {
             const note: INote = await this.noteService.createNote(req.body);
             res.status(201).json(note);
         } catch (error: any) {
-            res.status(500).json({ error: error.message });
+            if (error.name === 'ValidationError') {
+                res.status(400).json({ message: error.message });
+            } else {
+                res.status(500).json({ error: error.message });
+            }
         }
     }
 
@@ -47,7 +55,11 @@ export class NoteController implements INoteController {
                 res.status(404).json({ message: `Note with id ${req.params.id} not found` });
             }
         } catch (error: any) {
-            res.status(500).json({ error: error.message });
+            if (error.name === 'CastError') {
+                res.status(400).json({ message: `Invalid value to param id: ${error.value}` });
+            } else {
+                res.status(500).json({ error: error.message });
+            }
         }
     }
 
@@ -60,7 +72,11 @@ export class NoteController implements INoteController {
                 res.status(404).json({ message: `Note with id ${req.params.id} not found` });
             }
         } catch (error: any) {
-            res.status(500).json({ error: error.message });
+            if (error.name === 'CastError') {
+                res.status(400).json({ message: `Invalid value to param id: ${error.value}` });
+            } else {
+                res.status(500).json({ error: error.message });
+            }
         }
     }
 }
