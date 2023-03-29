@@ -62,4 +62,6 @@ or with Docker
     npx tsc --init #define typescript 
 ```
 ## DOCS
-https://www.typescriptlang.org/tsconfig#module
+[Cats http-code](https://http.cat/)
+[config typescript](https://www.typescriptlang.org/tsconfig#module)
+[install husky](https://twitter.com/midudev/status/1555552823017934849/photo/1)
