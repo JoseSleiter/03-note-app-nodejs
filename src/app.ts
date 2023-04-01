@@ -2,9 +2,13 @@
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import express, { Express } from 'express';
+import { auth, requiresAuth } from 'express-openid-connect';
 import helmet from "helmet";
 import mongoose from 'mongoose';
 import morgan from "morgan";
+
+// Config
+import { auth0Config } from './config/auth0.config';
 
 // Routes && Middlewares
 import { HandleInternalError } from './middlewares/handle-internal-error.middleware';
@@ -21,6 +25,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(morgan("tiny"));
+app.use(express.static("public"));
 
 // Routes Public
 app.get('/doc-public', (_req, res) => {
@@ -28,6 +33,13 @@ app.get('/doc-public', (_req, res) => {
 });
 
 // Routes Private
+app.use(auth(auth0Config)); // Login, Callback, Logout
+app.get('/', (req, res) => {
+    res.status(201).send(req.oidc.isAuthenticated() ? 'You are Logged in. To <b>logged out</b>, you must go to path: <b>/logout</b>' : 'Logged out');
+});
+app.get('/profile', requiresAuth(), (req, res) => {
+    res.status(200).send(JSON.stringify(req.oidc.user));
+});
 app.use('/api/v1', noteRoute)
 
 // Ending Middlewares
