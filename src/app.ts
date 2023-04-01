@@ -1,11 +1,15 @@
+// Venders
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import express, { Express } from 'express';
 import helmet from "helmet";
-import morgan from "morgan";
 import mongoose from 'mongoose';
+import morgan from "morgan";
+
+// Routes && Middlewares
+import { HandleInternalError } from './middlewares/handle-internal-error.middleware';
+import { HandleNotFoundPath } from './middlewares/handle-not-found-path.middleware';
 import noteRoute from './routes/v1/note.routes';
-import { NotFoundPath } from './middlewares/not-found-path.middleware';
 
 dotenv.config();
 const app: Express = express();
@@ -18,13 +22,34 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(morgan("tiny"));
 
-// Routes
+// Routes Public
+app.get('/doc-public', (_req, res) => {
+    res.send('You are Logged out');
+});
+
+// Routes Private
 app.use('/api/v1', noteRoute)
 
 // Ending Middlewares
-const notFoundPath = new NotFoundPath()
-app.use("*", notFoundPath.check);
-
+const handleNotFoundPath = new HandleNotFoundPath()
+const handleInternalError = new HandleInternalError()
+app.use("*", handleNotFoundPath.check);
+app.use(handleInternalError.check);
+app.use((
+    _err: any,
+    _req: express.Request,
+    res: express.Response,
+    _next: express.NextFunction
+) => {
+    return res.status(500).send({
+        error: "Oops! Error in server",
+        socialNetwork: [
+            'If you need a FullStack Developer for your projects, contact me by linkedin',
+            'https://www.linkedin.com/in/jose-sleiter-rios/',
+            'https://github.com/JoseSleiter/'
+        ]
+    });
+})
 // Start the DB
 mongoose.connect(`${URL_MONGODB}`, {
     autoIndex: true,
