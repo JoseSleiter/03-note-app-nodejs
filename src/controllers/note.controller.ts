@@ -1,13 +1,17 @@
 import { Request, Response } from 'express';
+import { Route, Example, Get, Controller, Request as Req, Response as Res } from "tsoa";
 import { INote } from '../interfaces/note.interface';
 import { NoteService } from '../services/note.services';
 import { INoteController } from './../interfaces/note.interface';
 
-export class NoteController implements INoteController {
+@Route('Notes')
+class NoteController extends Controller implements INoteController {
     constructor(private noteService: NoteService) {
+        super()
     }
 
-    getAllNotes = async (_req: Request, res: Response): Promise<void> => {
+    @Get('Current')
+    public async getAllNotes(@Req() _req: Request, res: Response): Promise<void> {
         try {
             const notes: INote[] = await this.noteService.getAllNotes();
             res.status(200).json(notes);
@@ -15,8 +19,8 @@ export class NoteController implements INoteController {
             res.status(500).json({ error: error.message });
         }
     }
-
-    getNoteById = async (req: Request, res: Response): Promise<void> => {
+    @Get("/22")
+    public async getNoteById(req: Request, res: Response): Promise<void> {
         try {
             const note: INote | null = await this.noteService.getNoteById(req.params.id);
             if (note) {
@@ -80,3 +84,5 @@ export class NoteController implements INoteController {
         }
     }
 }
+
+export { NoteController }

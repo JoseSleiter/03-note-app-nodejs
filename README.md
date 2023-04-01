@@ -65,3 +65,14 @@ or with Docker
 [Cats http-code](https://http.cat/)
 [config typescript](https://www.typescriptlang.org/tsconfig#module)
 [install husky](https://twitter.com/midudev/status/1555552823017934849/photo/1)
+
+npx tsoa spec-and-routes
+
+
+https://medium.com/bb-tutorials-and-thoughts/how-to-add-swagger-to-nodejs-rest-api-typescript-version-5a63953c993b
+
+https://tsoa-community.github.io/docs/decorators.html
+
+https://rsbh.dev/blogs/rest-api-with-express-typescript
+
+https://www.digitalocean.com/community/tutorials/how-to-write-end-to-end-tests-in-node-js-using-puppeteer-and-jest
